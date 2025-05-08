@@ -1,40 +1,16 @@
 pipeline {
     agent any
 
-    environment {
-        GITHUB_TOKEN = credentials('github-token')
-    }
-
     stages {
-        stage('Checkout') {
+        stage('Build') {
             steps {
-                git url: 'https://github.com/spidermancow/Moot-Court.git', credentialsId: 'github-token'
+                echo 'Success'
             }
         }
-
-        stage('Build Docker Image') {
+        stage('Run') {
             steps {
-                script {
-                    sh 'docker build -t moot-court-app .'
-                }
+                echo 'Hello Jenkins'
             }
-        }
-
-        stage('Run Docker Image') {
-            steps {
-                script {
-                    sh 'docker run -d -p 8085:8080 moot-court-app'
-                }
-            }
-        }
-    }
-
-    post {
-        success {
-            echo 'Build and deployment succeeded!'
-        }
-        failure {
-            echo 'Build or deployment failed!'
         }
     }
 }
